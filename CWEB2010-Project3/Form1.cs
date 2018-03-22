@@ -16,5 +16,28 @@ namespace CWEB2010_Project3
         {
             InitializeComponent();
         }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void EnterBox_Click(object sender, EventArgs e)
+        {
+            const string USERNAME = "home";
+            const string PASSWORD = "1234";
+
+            if (usernamebox.Text == USERNAME && passwordBox.Text == PASSWORD)
+            {
+                LoginPage.Visible = false;
+            }
+            else
+            {
+                badPass.Visible = true;
+
+                usernamebox.Text = "";
+                passwordBox.Text = "";
+            }
+        }
     }
 }
