@@ -10,10 +10,11 @@ namespace CWEB2010_Project3
     {
         public int hoursWorked { get; set; }
 
-        public StudentWorker(string idNum, string name, string dormNum, string resType, string level, int hoursWorked)
+        public StudentWorker(string idNum, string fName, string lName, string dormNum, string resType, string level, int hoursWorked)
         {
             this.idNum = idNum;
-            this.name = name;
+            this.fName = fName;
+            this.lName = lName;
             this.dormNum = dormNum;
             this.level = level;
             this.resType = resType;
@@ -23,7 +24,8 @@ namespace CWEB2010_Project3
         public StudentWorker(string[] resLine)
         {
             idNum = resLine[0];
-            name = $"{resLine[1]} {resLine[2]}";
+            fName = $"{resLine[1]}";
+            lName = $"{resLine[2]}";
             dormNum = resLine[3];
             level = resLine[4];
             rentMoney = Convert.ToInt32(resLine[5]);

@@ -15,20 +15,21 @@ namespace CWEB2010_Project3
         [STAThread]
         static void Main()
         {
+            const string filePath = "residents.csv";
+            Dictionary<int, Resident> resDict = new Dictionary<int, Resident>();
+
+            readResidentFile(filePath, ref resDict);
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new Form1(ref resDict));
 
-            const string filePath = "residents.csv";
-
-            readResidentFile(filePath);
-            
+            writeToResFile(filePath, ref resDict);
         }
 
-        public static void readResidentFile(string filePath)
+        public static void readResidentFile(string filePath, ref Dictionary<int, Resident> resDict)
         {
             string[] resLine;
-            Dictionary<int, Resident> resDict = new Dictionary<int, Resident>();
 
             FileStream testingFile = new FileStream(filePath, FileMode.Open, FileAccess.Read);
             StreamReader sr = new StreamReader(testingFile);
@@ -38,7 +39,7 @@ namespace CWEB2010_Project3
                 resLine = sr.ReadLine().Split(',');
                 switch (resLine[6])
                 {
-                    case "Scholarship":
+                    case "Scholarship Recipient":
                         resDict.Add(Convert.ToInt32(resLine[0]), new Scholarship(resLine));
                         break;
                     case "Student Worker":
@@ -51,6 +52,20 @@ namespace CWEB2010_Project3
             }
 
             sr.Close();
+            testingFile.Close();
+        }
+
+        public static void writeToResFile(string filePath, ref Dictionary<int, Resident> resDict)
+        {
+            FileStream testingFile = new FileStream(filePath, FileMode.Open, FileAccess.Write);
+            StreamWriter sw = new StreamWriter(testingFile);
+
+            foreach (Resident res in resDict.Values)
+            {
+                sw.WriteLine($"{res.idNum},{res.fName},{res.lName},{res.dormNum},{res.level},{res.rentMoney},{res.resType}");
+            }
+
+            sw.Close();
             testingFile.Close();
         }
     }
